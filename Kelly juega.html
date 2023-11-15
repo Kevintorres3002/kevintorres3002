@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego de Piedra, Papel o Tijera</title>
+    <style>
+       /* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Estilos para el encabezado */
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Estilos para la sección del jugador */
+.player-info {
+    margin-top: 20px;
+}
+
+.name {
+    font-size: 24px;
+}
+
+.pink {
+    color: #FF69B4;
+    font-weight: bold;
+}
+
+.heart {
+    color: #FF69B4;
+    font-size: 28px;
+    margin-right: 5px;
+}
+
+/* Estilos para la sección del juego */
+.game {
+    margin-top: 50px;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.option {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background-color: #f9f9f9;
+}
+
+.result {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Estilos para el pie de página */
+footer {
+    margin-top: 50px;
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+}
+
+.reward-message {
+    font-size: 18px;
+}
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Encabezado */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+/* Sección del jugador */
+.player-info {
+    margin-top: 20px;
+}
+
+.name {
+    font-size: 24px;
+    color: #FF69B4;
+    font-weight: bold;
+}
+
+.heart {
+    color: #FF69B4;
+    font-size: 28px;
+    margin: 0 5px;
+    animation: beat 1s infinite alternate;
+}
+
+@keyframes beat {
+    to {
+        transform: scale(1.2);
+    }
+}
+
+/* Sección del juego */
+.game {
+    margin-top: 50px;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.option {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 2px solid #FF69B4;
+    border-radius: 5px;
+    color: #FF69B4;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background-color: #FF69B4;
+    color: #fff;
+}
+
+.result {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Pie de página */
+footer {
+    margin-top: 50px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.reward-message {
+    font-size: 18px;
+    color: #FF69B4;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Juego de Piedra, Papel o Tijera</h1>
+    </header>
+    
+    <main>
+        <section class="player-info">
+            <div class="name">
+                <div class="heart">&hearts;</div> Bienvenida, <span class="pink">Kelly hermosa</span> <div class="heart">&hearts;</div>
+            </div>
+            <div class="choices">
+                <div class="image-container">
+                    <img src="C:\Users\KEVIN\Desktop\tijeras.png" alt="Tijera" onclick="jugar('tijera')" onmousedown="moveImage(this)">
+                    <div class="caption">Tijeras</div>
+                </div>
+                <div class="image-container">
+                    <img src="C:\Users\KEVIN\Desktop\papel.png" alt="Papel" onclick="jugar('papel')" onmousedown="moveImage(this)">
+                    <div class="caption">Papel</div>
+                </div>
+                <div class="image-container">
+                    <img src="C:\Users\KEVIN\Desktop\piedra.png" alt="Piedra" onclick="jugar('piedra')" onmousedown="moveImage(this)">
+                    <div class="caption">Piedra</div>
+                </div>
+            </div>
+        <div class="result" style="display: none;"></div>
+        <div class="score">Partidas ganadas: <span id="wins">0</span> / Partidas perdidas: <span id="losses">0</span></div>
+    
+        </section>
+    </main>
+
+    <footer>
+        <p>Escoge y juega, mi Kelly</p>
+        <div class="reward-message"></div>
+    </footer>
+    
+    <script>
+        let wins = 0;
+let consecutiveWins = 0;
+
+function jugar(eleccion) {
+    let opciones = ["piedra", "papel", "tijera"];
+    let pc = opciones[Math.floor(Math.random() * 3)];
+    let resultado = "";
+
+    document.querySelector('.result').style.display = 'block';
+    document.querySelector('.result').innerHTML = `Elegiste ${eleccion}. PC eligió ${pc}.`;
+
+    if (eleccion === pc) {
+        resultado = "EMPATE";
+    } else if ((eleccion === "piedra" && pc === "tijera") || 
+               (eleccion === "papel" && pc === "piedra") || 
+               (eleccion === "tijera" && pc === "papel")) {
+        resultado = "GANASTE";
+        wins++;
+        consecutiveWins++;
+    } else {
+        resultado = "PERDISTE";
+        consecutiveWins = 0;
+    }
+
+    document.querySelector('.result').innerHTML += ` ${resultado}`;
+    document.getElementById('wins').textContent = wins;
+
+    if (consecutiveWins === 3) {
+        mostrarRecompensa();
+    }
+}
+
+function mostrarRecompensa() {
+    document.querySelector('.reward-message').innerHTML = "¡Tu recompensa por ganar es que te ganaste un beso del programador de esta página (Kevin Torres)!";
+    wins = 0;
+    consecutiveWins = 0;
+
+    setTimeout(() => {
+        document.querySelector('.reward-message').innerHTML = "";
+    }, 10000); // 10 segundos (10000 milisegundos)
+}
+
+    </script>
+</body>
+</html>
